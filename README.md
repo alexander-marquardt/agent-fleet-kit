@@ -3,7 +3,7 @@
 Small, standalone pieces for running a fleet of [Claude Code](https://claude.com/claude-code) sub-agents without paying for context they no longer need. They come from the workflow described in two articles:
 
 - [One developer, a fleet of Claude Code agents, 1,652 merged PRs in a month](https://alexmarquardt.com/ai-tools/one-developer-coding-agent-fleet/): the rules, tests, gates and control plane that keep the code under control.
-- [Where a fleet of coding agents spends its tokens](https://alexmarquardt.com/ai-tools/agent-fleet-token-efficiency/): how the token use was measured, and what each change recovered.
+- [The same work on a third of the tokens: tuning a fleet of coding agents](https://alexmarquardt.com/ai-tools/agent-fleet-token-efficiency/): how the token use was measured, and what each change recovered.
 
 **This is a small extracted starting point, not the system the articles describe.** That system runs from a private repository: an allocator that runs the agent slots from one queue, agent roles for implementing, reviewing and fixing, a watchdog, per-agent clones, CI gates and the written rules behind them. What is here are the three pieces that are generic and paid off most for token cost, rewritten from scratch as minimal versions, with no dependencies beyond Python 3.9+. Each is a single file you can read in a few minutes.
 
