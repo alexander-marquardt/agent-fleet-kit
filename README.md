@@ -15,7 +15,7 @@ The versions here are minimal rewrites of the ideas, with no dependencies beyond
 | [`hooks/wait_cap.py`](hooks/wait_cap.py) | A `PreToolUse` hook on `Bash`. A sub-agent may not block in the foreground (long `timeout`, long `sleep`) past the prompt cache's lifetime; it runs the command in the background and polls instead. | Cache expiry fell from about 31% of agent usage to under 1%. |
 | [`scripts/session_tokens.py`](scripts/session_tokens.py) | Sums token use per session from the transcripts Claude Code already keeps in `~/.claude/projects/`, counting each request once. | It is how the two numbers above were found. |
 
-Both hooks judge sub-agents only; the main session is left alone. Both fail open: if a hook cannot read what it needs, the tool call runs.
+Both hooks judge sub-agents only; the main session is left alone. Both fail open: if a hook cannot read what it needs, the tool call runs. That includes a new sub-agent's first tool call, which can run before its first reply is written to its transcript. Recent Claude Code versions refuse a bare long `sleep` themselves; the wait cap's own `sleep` check is a backstop, and its `timeout` check is the part that matters.
 
 ## Install
 
@@ -53,7 +53,7 @@ A line in a prompt asking an agent to hand off early, or not to wait on CI in th
 python3 -m unittest discover tests
 ```
 
-The tests run on fixed transcripts and hook inputs; they need no network and no Claude Code install.
+The tests run on fixed transcripts and hook inputs; they need no network and no Claude Code install. Both hooks were also checked live with Claude Code 2.1.318: past the ceiling a sub-agent's `ls` and `echo` were refused and `git --version` ran; a foreground `timeout` of 600 s was refused, and the same call with `run_in_background` ran.
 
 ## License
 

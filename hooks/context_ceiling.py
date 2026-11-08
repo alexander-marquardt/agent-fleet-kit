@@ -21,6 +21,9 @@ own transcript: ``input_tokens + cache_read_input_tokens +
 cache_creation_input_tokens``, the size of the prompt that call sent.
 
 The hook guards cost, not safety, so anything it cannot read allows the call.
+That includes a new sub-agent's first tool call, which can run before Claude
+Code has written the agent's first reply to its transcript; the ceiling only
+matters many calls later, so nothing is lost.
 Thresholds can be set with ``CONTEXT_ADVISORY_TOKENS`` and
 ``CONTEXT_CEILING_TOKENS``.
 """
