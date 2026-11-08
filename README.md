@@ -5,7 +5,12 @@ Small, standalone pieces for running a fleet of [Claude Code](https://claude.com
 - [One developer, a fleet of Claude Code agents, 1,652 merged PRs in a month](https://alexmarquardt.com/ai-tools/one-developer-coding-agent-fleet/): the rules, tests, gates and control plane that keep the code under control.
 - [Where a fleet of coding agents spends its tokens](https://alexmarquardt.com/ai-tools/agent-fleet-token-efficiency/): how the token use was measured, and what each change recovered.
 
-The versions here are minimal rewrites of the ideas, with no dependencies beyond Python 3.9+. Each is a single file you can read in a few minutes.
+**This is a small extracted starting point, not the system the articles describe.** That system runs from a private repository: an allocator that runs the agent slots from one queue, agent roles for implementing, reviewing and fixing, a watchdog, per-agent clones, CI gates and the written rules behind them. What is here are the three pieces that are generic and paid off most for token cost, rewritten from scratch as minimal versions, with no dependencies beyond Python 3.9+. Each is a single file you can read in a few minutes.
+
+## What it covers, and what it does not
+
+- **Covered:** the two largest token-cost fixes in [the token article](https://alexmarquardt.com/ai-tools/agent-fleet-token-efficiency/) (ending agents at a context ceiling, and not letting the prompt cache expire while an agent waits) and the script that measures them. With these and the measurement, you can reproduce that article's main levers on your own sessions.
+- **Not covered:** most of [the fleet article](https://alexmarquardt.com/ai-tools/one-developer-coding-agent-fleet/): the control plane, the review agents, the gates and the rules. The article describes each one well enough to build your own; the code for them is not published.
 
 ## What is in it
 
